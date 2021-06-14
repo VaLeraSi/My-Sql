@@ -1,0 +1,241 @@
+------------------------------------1-2-----------------------------------
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 72
+Server version: 8.0.25 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>  USE sample;
+Database changed
+mysql> ALTER TABLE users
+    -> ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -> ADD COLUMN updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW COLUMNS FROM users;
++------------+-----------------+------+-----+-------------------+-----------------------------------------------+
+| Field      | Type            | Null | Key | Default           | Extra                                         |
++------------+-----------------+------+-----+-------------------+-----------------------------------------------+
+| id         | bigint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| name       | varchar(255)    | YES  |     | NULL              |                                               |
+| created_at | timestamp       | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at | datetime        | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++------------+-----------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO users (name) VALUES ('IVAN');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM users;
++----+------+---------------------+---------------------+
+| id | name | created_at          | updated_at          |
++----+------+---------------------+---------------------+
+|  1 | IVAN | 2021-06-14 22:31:23 | 2021-06-14 22:31:23 |
++----+------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql>
+---------------------------------3------------------------------------
+
+C:\WINDOWS\system32>cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 73
+Server version: 8.0.25 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE sample;
+Database changed
+mysql> DROP TABLE IF EXISTS storehouses_products;
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> CREATE TABLE storehouses_products (
+    ->   id SERIAL PRIMARY KEY,
+    ->     storehouse_id int unsigned,
+    ->     product_id int unsigned,
+    ->     value int unsigned comment 'Запас товарной позиции на складе',
+    ->     created_at DATETIME default current_timestamp COMMENT 'Дата регистрации',
+    ->     updated_at DATETIME default current_timestamp ON UPDATE current_timestamp COMMENT 'Дата последнего обновления записи'
+    -> ) COMMENT = 'Склады и продукты';
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO storehouses_products (storehouse_id, product_id, value) VALUES
+    ->   (1, 1, 0),
+    ->     (1, 2, 4),
+    ->     (1, 3, 0),
+    ->     (2, 4, 7),
+    ->     (2, 5, 56),
+    ->     (1, 6, 0),
+    ->     (1, 7, 4);
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM storehouses_products;
++----+---------------+------------+-------+---------------------+---------------------+
+| id | storehouse_id | product_id | value | created_at          | updated_at          |
++----+---------------+------------+-------+---------------------+---------------------+
+|  1 |             1 |          1 |     0 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  2 |             1 |          2 |     4 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  3 |             1 |          3 |     0 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  4 |             2 |          4 |     7 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  5 |             2 |          5 |    56 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  6 |             1 |          6 |     0 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  7 |             1 |          7 |     4 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
++----+---------------+------------+-------+---------------------+---------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT id, storehouse_id, product_id, value FROM storehouses_products ORDER BY CASE WHEN value = 0 then 1 else 0 end, value;
++----+---------------+------------+-------+
+| id | storehouse_id | product_id | value |
++----+---------------+------------+-------+
+|  2 |             1 |          2 |     4 |
+|  7 |             1 |          7 |     4 |
+|  4 |             2 |          4 |     7 |
+|  5 |             2 |          5 |    56 |
+|  1 |             1 |          1 |     0 |
+|  3 |             1 |          3 |     0 |
+|  6 |             1 |          6 |     0 |
++----+---------------+------------+-------+
+7 rows in set (0.00 sec)
+
+
+-------------------------------агрегация данных(1)---------------------------------------------
+
+
+mysql> USE sample;
+Database changed
+mysql> ALTER TABLE users
+    -> ADD COLUMN birthday_at DATE;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW COLUMNS FROM users;
++-------------+-----------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type            | Null | Key | Default           | Extra                                         |
++-------------+-----------------+------+-----+-------------------+-----------------------------------------------+
+| id          | bigint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| name        | varchar(255)    | YES  |     | NULL              |                                               |
+| created_at  | timestamp       | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at  | datetime        | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
+| birthday_at | date            | YES  |     | NULL              |                                               |
++-------------+-----------------+------+-----+-------------------+-----------------------------------------------+
+5 rows in set (0.00 sec)
+mysql> INSERT INTO users(name, birthday_at) VALUES('Masha', '2011-12-03');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO users(name, birthday_at) VALUES('Dasha', '2011-12-24');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO users(name, birthday_at) VALUES('Misha', '2011-11-13');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO users(name, birthday_at) VALUES('Sasha', '2011-02-22');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO users(name, birthday_at) VALUES('Nina', '2010-07-07');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO users(name, birthday_at) VALUES('Sveta', '2010-07-03');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM users;
++----+-------+---------------------+---------------------+-------------+
+| id | name  | created_at          | updated_at          | birthday_at |
++----+-------+---------------------+---------------------+-------------+
+|  1 | IVAN  | 2021-06-14 22:31:23 | 2021-06-14 22:31:23 | NULL        |
+|  2 | Masha | 2021-06-14 23:41:18 | 2021-06-14 23:41:18 | 2011-12-03  |
+|  3 | Dasha | 2021-06-14 23:41:42 | 2021-06-14 23:41:42 | 2011-12-24  |
+|  4 | Misha | 2021-06-14 23:42:07 | 2021-06-14 23:42:07 | 2011-11-13  |
+|  5 | Sasha | 2021-06-14 23:42:33 | 2021-06-14 23:42:33 | 2011-02-22  |
+|  6 | Nina  | 2021-06-14 23:43:07 | 2021-06-14 23:43:07 | 2010-07-07  |
+|  7 | Sveta | 2021-06-14 23:43:27 | 2021-06-14 23:43:27 | 2010-07-03  |
++----+-------+---------------------+---------------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> DELETE FROM users WHERE name='IVAN';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM users;
++----+-------+---------------------+---------------------+-------------+
+| id | name  | created_at          | updated_at          | birthday_at |
++----+-------+---------------------+---------------------+-------------+
+|  2 | Masha | 2021-06-14 23:41:18 | 2021-06-14 23:41:18 | 2011-12-03  |
+|  3 | Dasha | 2021-06-14 23:41:42 | 2021-06-14 23:41:42 | 2011-12-24  |
+|  4 | Misha | 2021-06-14 23:42:07 | 2021-06-14 23:42:07 | 2011-11-13  |
+|  5 | Sasha | 2021-06-14 23:42:33 | 2021-06-14 23:42:33 | 2011-02-22  |
+|  6 | Nina  | 2021-06-14 23:43:07 | 2021-06-14 23:43:07 | 2010-07-07  |
+|  7 | Sveta | 2021-06-14 23:43:27 | 2021-06-14 23:43:27 | 2010-07-03  |
++----+-------+---------------------+---------------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT ROUND(AVG((TO_DAYS(NOW()) - TO_DAYS(birthday_at)) / 365.25), 0) AS AVG_Age FROM users;
++---------+
+| AVG_Age |
++---------+
+|      10 |
++---------+
+1 row in set (0.01 sec)
+
+mysql>
+
+-------------------------------агрегация данных(2)---------------------------------------------
+mysql> SELECT
+    ->     DAYNAME(CONCAT(YEAR(NOW()), '-', SUBSTRING(birthday_at, 6, 10))) AS week_day_of_birthday_in_this_Year,
+    ->     COUNT(*) AS amount_of_birthday
+    -> FROM
+    ->     users
+    -> GROUP BY
+    ->     week_day_of_birthday_in_this_Year
+    -> ORDER BY
+    -> amount_of_birthday DESC;
++-----------------------------------+--------------------+
+| week_day_of_birthday_in_this_Year | amount_of_birthday |
++-----------------------------------+--------------------+
+| Friday                            |                  2 |
+| Saturday                          |                  2 |
+| Monday                            |                  1 |
+| Wednesday                         |                  1 |
++-----------------------------------+--------------------+
+4 rows in set (0.01 sec)
+
+-------------------------------агрегация данных(3)---------------------------------------------
+
+mysql> SELECT * FROM storehouses_products;
++----+---------------+------------+-------+---------------------+---------------------+
+| id | storehouse_id | product_id | value | created_at          | updated_at          |
++----+---------------+------------+-------+---------------------+---------------------+
+|  1 |             1 |          1 |     0 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  2 |             1 |          2 |     4 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  3 |             1 |          3 |     0 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  4 |             2 |          4 |     7 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  5 |             2 |          5 |    56 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  6 |             1 |          6 |     0 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
+|  7 |             1 |          7 |     4 | 2021-06-14 22:41:27 | 2021-06-14 22:41:27 |
++----+---------------+------------+-------+---------------------+---------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT ROUND(exp(SUM(log(value))), 0) AS factorial FROM storehouses_products;
++-----------+
+| factorial |
++-----------+
+|      6272 |
++-----------+
+1 row in set, 3 warnings (0.01 sec)
+
+mysql>
