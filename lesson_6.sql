@@ -1,5 +1,5 @@
 USE vk;
--- Задание 2
+--  Р—РђР”РђРќРР• 2
 SELECT
     from_user_id
     , COUNT(*) as send 
@@ -8,15 +8,15 @@ WHERE to_user_id=328
 GROUP BY from_user_id
 ORDER BY send DESC;
 
--- Задание 3
+-- Р—РђР”РђРќРР• 3
 
 SELECT COUNT(*) as 'Likes' FROM profiles WHERE (YEAR(NOW())-YEAR(birthday)) < 10;
 
--- Задание 4
+-- Р—РђР”РђРќРР• 4
 
-SELECT gender, COUNT(*) as 'Кол-во' FROM profiles GROUP BY gender;
+SELECT gender, COUNT(*) as 'ГЉГ®Г«-ГўГ®' FROM profiles GROUP BY gender;
     
--- Задание 5
+-- Р—РђР”РђРќРР• 5
 
 SELECT count(user_id) FROM media m GROUP BY user_id ;
 
