@@ -14,7 +14,7 @@ SELECT COUNT(*) as 'Likes' FROM profiles WHERE (YEAR(NOW())-YEAR(birthday)) < 10
 
 -- ЗАДАНИЕ 4
 
-SELECT gender, COUNT(*) as 'Êîë-âî' FROM profiles GROUP BY gender;
+SELECT gender, COUNT(*) as 'КОЛИЧЕСТВО' FROM profiles GROUP BY gender;
     
 -- ЗАДАНИЕ 5
 
