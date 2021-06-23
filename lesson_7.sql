@@ -1,5 +1,5 @@
 
--- Задание 1
+-- Р—Р°РґР°РЅРёРµ  1
 use shop_online;
 
 SELECT 
@@ -13,7 +13,7 @@ ON
 	u.id = o.user_id;
 	
 
--- Задание 2
+-- Р—Р°РґР°РЅРёРµ 2
 use shop_online;
 
 SELECT 
@@ -28,7 +28,7 @@ ON
 	p.catalog_id = c.id;
 	
 
--- Задание 3
+-- Р—Р°РґР°РЅРёРµ 3
 
 SELECT
 	id AS flight_id,
