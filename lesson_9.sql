@@ -1,5 +1,6 @@
--- Практическое задание по теме “Транзакции, переменные, представления”
--- задание 1 
+-- РџСЂР°РєС‚РёС‡РµСЃРєРѕРµ Р·Р°РґР°РЅРёРµ РїРѕ С‚РµРјРµ вЂњРўСЂР°РЅР·Р°РєС†РёРё, РїРµСЂРµРјРµРЅРЅС‹Рµ, РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏвЂќ
+
+--  Р·Р°РґР°РЅРёРµ 1 
 
 USE sample;
 
@@ -11,7 +12,7 @@ COMMIT;
 
 SELECT * FROM users;
 
--- задание 2
+-- Р·Р°РґР°РЅРёРµ 2
 
 use shop_online;
 CREATE OR REPLACE VIEW prods_desc(prod_id, prod_name, cat_name) AS
@@ -22,7 +23,7 @@ ON p.catalog_id = cat.id;
 
 SELECT * FROM prods_desc;
 
--- задание 4
+-- Р·Р°РґР°РЅРёРµ 4
 
 use shop_online;
 DROP TABLE IF EXISTS datetbl;
@@ -67,8 +68,8 @@ WHERE created_at NOT IN (
 
 SELECT * FROM datetbl ORDER BY created_at DESC;
 
--- Практическое задание по теме “Хранимые процедуры и функции, триггеры"
--- задание 1 
+-- РџСЂР°РєС‚РёС‡РµСЃРєРѕРµ Р·Р°РґР°РЅРёРµ РїРѕ С‚РµРјРµ вЂњРҐСЂР°РЅРёРјС‹Рµ РїСЂРѕС†РµРґСѓСЂС‹ Рё С„СѓРЅРєС†РёРё, С‚СЂРёРіРіРµСЂС‹"
+-- Р·Р°РґР°РЅРёРµ 1 
 
 DROP PROCEDURE IF EXISTS hello;
 delimiter //
@@ -76,20 +77,20 @@ CREATE PROCEDURE hello()
 BEGIN
 	CASE 
 		WHEN CURTIME() BETWEEN '06:00:00' AND '12:00:00' THEN
-			SELECT 'Доброе утро';
+			SELECT 'Г„Г®ГЎГ°Г®ГҐ ГіГІГ°Г®';
 		WHEN CURTIME() BETWEEN '12:00:00' AND '18:00:00' THEN
-			SELECT 'Добрый день';
+			SELECT 'Г„Г®ГЎГ°Г»Г© Г¤ГҐГ­Гј';
 		WHEN CURTIME() BETWEEN '18:00:00' AND '00:00:00' THEN
-			SELECT 'Добрый вечер';
+			SELECT 'Г„Г®ГЎГ°Г»Г© ГўГҐГ·ГҐГ°';
 		ELSE
-			SELECT 'Доброй ночи';
+			SELECT 'Г„Г®ГЎГ°Г®Г© Г­Г®Г·ГЁ';
 	END CASE;
 END //
 delimiter ;
 
 CALL hello();
 
--- задание 2
+-- Р·Р°РґР°РЅРёРµ 2
 
 DROP TRIGGER IF EXISTS nullTrigger;
 delimiter //
@@ -109,5 +110,5 @@ INSERT INTO products (name, description, price, catalog_id)
 VALUES ("GeForce GTX 1080", NULL, 15000, 12); -- success
 
 INSERT INTO products (name, description, price, catalog_id)
-VALUES ("GeForce GTX 1080", "Мощная видеокарта", 15000, 12); -- success
+VALUES ("GeForce GTX 1080", "ГЊГ®Г№Г­Г Гї ГўГЁГ¤ГҐГ®ГЄГ Г°ГІГ ", 15000, 12); -- success
 
