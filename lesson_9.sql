@@ -77,13 +77,13 @@ CREATE PROCEDURE hello()
 BEGIN
 	CASE 
 		WHEN CURTIME() BETWEEN '06:00:00' AND '12:00:00' THEN
-			SELECT 'Äîáðîå óòðî';
+			SELECT 'Доброе утро';
 		WHEN CURTIME() BETWEEN '12:00:00' AND '18:00:00' THEN
-			SELECT 'Äîáðûé äåíü';
+			SELECT 'Добрый день';
 		WHEN CURTIME() BETWEEN '18:00:00' AND '00:00:00' THEN
-			SELECT 'Äîáðûé âå÷åð';
+			SELECT 'Добрый вечер';
 		ELSE
-			SELECT 'Äîáðîé íî÷è';
+			SELECT 'Доброй ночи';
 	END CASE;
 END //
 delimiter ;
@@ -110,5 +110,5 @@ INSERT INTO products (name, description, price, catalog_id)
 VALUES ("GeForce GTX 1080", NULL, 15000, 12); -- success
 
 INSERT INTO products (name, description, price, catalog_id)
-VALUES ("GeForce GTX 1080", "Ìîùíàÿ âèäåîêàðòà", 15000, 12); -- success
+VALUES ("GeForce GTX 1080", "Мощная видеокарта", 15000, 12); -- success
 
