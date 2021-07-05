@@ -1,5 +1,5 @@
--- Практическое задание по теме “Оптимизация запросов”
--- Задание 1 
+-- РџСЂР°РєС‚РёС‡РµСЃРєРѕРµ Р·Р°РґР°РЅРёРµ РїРѕ С‚РµРјРµ вЂњРћРїС‚РёРјРёР·Р°С†РёСЏ Р·Р°РїСЂРѕСЃРѕРІвЂќ
+-- Р—Р°РґР°РЅРёРµ 1 
 
 DROP TABLE IF EXISTS logs;
 CREATE TABLE logs (
@@ -50,7 +50,7 @@ SELECT * FROM users;
 SELECT * FROM logs;
 
 INSERT INTO users (name, birthday_at)
-VALUES ('Кнехт', '1900-01-01');
+VALUES ('ГЉГ­ГҐГµГІ', '1900-01-01');
 
 SELECT * FROM users;
 SELECT * FROM logs;
@@ -70,9 +70,9 @@ SELECT * FROM catalogs;
 SELECT * FROM logs;
 
 INSERT INTO catalogs (name)
-VALUES ('Оперативная память'),
-		('Кулеры'),
-		('Аксессуары');
+VALUES ('РћРїРµСЂР°С‚РёРІРЅР°СЏ РїР°РјСЏС‚СЊ'),
+		('РљСѓР»РµСЂС‹'),
+		('РђРєСЃРµСЃСЃСѓР°СЂС‹');
 
 SELECT * FROM catalogs;
 SELECT * FROM logs;
@@ -83,9 +83,9 @@ SELECT * FROM products;
 SELECT * FROM logs;
 
 INSERT INTO products (name, description, price, catalog_id)
-VALUES ('PATRIOT PSD34G13332', 'Оперативная память', 3000.00, 13),
-		('DARK ROCK PRO 4 (BK022)', 'Кулеры', 500.00, 14),
-		('Коврик', 'Коврик для мыши', 150.00, 15);
+VALUES ('PATRIOT PSD34G13332', 'РћРїРµСЂР°С‚РёРІРЅР°СЏ РїР°РјСЏС‚СЊ', 3000.00, 13),
+		('DARK ROCK PRO 4 (BK022)', 'РљСѓР»РµСЂС‹', 500.00, 14),
+		('РљРѕРІСЂРёРє', 'РљРѕРІСЂРёРє РґР»СЏ РјС‹С€Рё', 150.00, 15);
 
 SELECT * FROM products;
 SELECT * FROM logs;
@@ -93,20 +93,21 @@ SELECT * FROM logs;
 
 
 
--- Практическое задание по теме “NoSQL”
+-- РџСЂР°РєС‚РёС‡РµСЃРєРѕРµ Р·Р°РґР°РЅРёРµ РїРѕ С‚РµРјРµ вЂњNoSQLвЂќ
 
--- Задание 1 
+-- Р—Р°РґР°РЅРёРµ 1 
 
 SADD ip '127.0.0.1' '127.0.0.2' '127.0.0.3'
-// Невозможно добавить в коллекцию уже имеющиейся в ней ip адрес, только уникальные значения
+// РќРµРІРѕР·РјРѕР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РІ РєРѕР»Р»РµРєС†РёСЋ СѓР¶Рµ РёРјРµСЋС‰РёРµР№СЃСЏ РІ РЅРµР№ ip Р°РґСЂРµСЃ, С‚РѕР»СЊРєРѕ СѓРЅРёРєР°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ
 SADD ip '127.0.0.1' 
-// просмотрим список уникальных ip
+// РїСЂРѕСЃРјРѕС‚СЂРёРј СЃРїРёСЃРѕРє СѓРЅРёРєР°Р»СЊРЅС‹С… ip
 SMEMBERS ip
-// кол-во адресов в коллекции
+// РєРѕР»-РІРѕ Р°РґСЂРµСЃРѕРІ РІ РєРѕР»Р»РµРєС†РёРё
 SCARD ip
 
 
--- Задание 2 
+
+-- Р—Р°РґР°РЅРёРµ 2
 
 set alex@mail.ru alex 
 set alex alex@mail.ru
@@ -115,20 +116,21 @@ get alex@mail.ru
 get alex 
 
 
--- Задание 3 
+-- Р—Р°РґР°РЅРёРµ 3 
 
-// *** Табл. products ***
+// *** РўР°Р±Р». products ***
 use products
-db.products.insert({"name": "Intel Core i3-8100", "description": "Процессор для настольных ПК", "price": "8000.00", "catalog_id": "Процессоры", "created_at": new Date(), "updated_at": new Date()}) 
+db.products.insert({"name": "Intel Core i3-8100", "description": "РџСЂРѕС†РµСЃСЃРѕСЂ РґР»СЏ РЅР°СЃС‚РѕР»СЊРЅС‹С… РџРљ", "price": "8000.00", "catalog_id": "РџСЂРѕС†РµСЃСЃРѕСЂС‹", "created_at": new Date(), "updated_at": new Date()}) 
 
 db.products.insertMany([
-	{"name": "AMD FX-8320", "description": "Процессор для настольных ПК", "price": "4000.00", "catalog_id": "Процессоры", "created_at": new Date(), "updated_at": new Date()},
-	{"name": "AMD FX-8320E", "description": "Процессор для настольных ПК", "price": "4500.00", "catalog_id": "Процессоры", "created_at": new Date(), "updated_at": new Date()}])
+	{"name": "AMD FX-8320", "description": "РџСЂРѕС†РµСЃСЃРѕСЂ РґР»СЏ РЅР°СЃС‚РѕР»СЊРЅС‹С… РџРљ", "price": "4000.00", "catalog_id": "РџСЂРѕС†РµСЃСЃРѕСЂС‹", "created_at": new Date(), "updated_at": new Date()},
+	{"name": "AMD FX-8320E", "description": "РџСЂРѕС†РµСЃСЃРѕСЂ РґР»СЏ РЅР°СЃС‚РѕР»СЊРЅС‹С… РџРљ", "price": "4500.00", "catalog_id": "РџСЂРѕС†РµСЃСЃРѕСЂС‹", "created_at": new Date(), "updated_at": new Date()}])
 
 db.products.find().pretty()
 db.products.find({name: "AMD FX-8320"}).pretty()
 
 
-// *** Табл. catalogs ***
+// *** РўР°Р±Р». catalogs ***
 use catalogs
-db.catalogs.insertMany([{"name": "Процессоры"}, {"name": "Мат.платы"}, {"name": "Видеокарты"}])
+db.catalogs.insertMany([{"name": "РџСЂРѕС†РµСЃСЃРѕСЂС‹"}, {"name": "РњР°С‚.РїР»Р°С‚С‹"}, {"name": "Р’РёРґРµРѕРєР°СЂС‚С‹"}])
+
